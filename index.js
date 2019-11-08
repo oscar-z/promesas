@@ -20,10 +20,14 @@ function crear () {
         gender: "M",
         age: 26,
         is_alive: true
-    }           
-    request.post({url:'https://goodreads-devf-aaron.herokuapp.com/api/v1/authors/', form: author}, (request, response, body) => {
-        let bodyToJson = JSON.parse(body);
-     console.log(bodyToJson);
+    }   
+    return new Promise((resolve, reject) =>{        
+        request.post({url:'https://goodreads-devf-aaron.herokuapp.com/api/v1/authors/', form: author}, (err, response, body) => {
+            let bodyToJson = JSON.parse(body);
+            response.statusCode == 201
+            ? resolve(bodyToJson)
+            : reject ('No se creo') 
+        })
     })
 }
 
@@ -32,5 +36,6 @@ function crear () {
 //     console.log(bodyToJson());
 // })
 
-crear();
+crear().then(data => console.log(data)
+);
 
